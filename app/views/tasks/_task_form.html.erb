@@ -1,53 +1,69 @@
-<div class="container">
-  <%= form_for ([@claim, @claim.tasks.new]) do |f| %>
-    <div class="row">
-      </br>
-      <div class="col-md-4 select">
-        <div class="form-group">
-          <label>Task type</label>
-          <%= f.select :task_type, [["Make Contact", "Make Contact"], ["Visit", "Visit"], ["Report", "Report"], ["Other", "Other"]], {},
-                        prompt: "Select...", class: "form-control" %>
-        </div>
-      </div>
+<div class="row">
+  </br>
+  <div class="col-md-4 select">
+    <div class="form-group">
+      <label>Task type</label>
+      <%= f.select :task_type_id, options_for_select(Task.type_options), {},
+                    prompt: "Select...", class: "form-control" %>
     </div>
-    <div class="row">
-      <div class="col-md-8">
-        <div class="form-group">
-          <label>Title</label>
-          <%= f.text_field :task_name, class: "form-control", placeholder: "Brief summary of task", id: "task_name" %>
-        </div>
-      </div>
+  </div>  
+  <div class="col-md-4 select">  
+    <div class="form-group">
+      <label>Milestone type</label>
+      <%= f.select :milestone, [["Milestone 1", "Milestone 1"], ["Milestone 2", "Milestone 2"], ["Milestone 3", "Milestone 3"], ["Milestone 4", "Milestone 4"]], {},
+                    prompt: "Select...", class: "form-control" %>
     </div>
-    <div class="row">
-      <div class="col-md-8">
-        <div class="form-group">
-          <label>Description</label>
-          <%= f.text_area :task_description, rows: 5, placeholder: "Describe the task in detail", class: "form-control", required: false %>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4">
-        <div class="form-group">
-          <label>Due Date</label>
-          <%= f.text_field :task_due, class: "form-control", placeholder: "Due Date", data:{ provide:'datepicker' } %>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="form-group">
-          <label>Assigned To</label>
-          <%= f.select :user_id, [["User 1", "1"], ["User 2", "2"], ["User 3", "3"], ["User 4", "4"]], {},
-                        prompt: "Link to User table", class: "form-control" %>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-8">
-        <div class="form-group">
-          <%= f.submit "Add Task", class: "btn btn-normal btn-block" %>
-        </div>
-      </div>
-    </div>
-    </br>
-  <% end %>
+  </div>
 </div>
+<div class="row">
+  <div class="col-md-8">
+    <div class="form-group">
+      <label>Title</label>
+      <%= f.text_field :title, class: "form-control", placeholder: "Brief summary of task", id: "title", required: "required" %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <div class="form-group">
+      <label>Description</label>
+      <%= f.text_area :description, rows: 5, placeholder: "Describe the task in detail", class: "form-control", required: false %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <div class="form-group">
+      <label>Due Date</label>
+      <%= f.text_field :task_due, class: "form-control", placeholder: "Due Date", data:{ provide:'datepicker' } %>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <label>Assign To</label>
+      <%= text_field_tag "user_picker", '', autocomplete: "on", id: 'user_picker', class: 'form-control', placeholder: "Please add at least 2 characters to find user", required: "required" %>
+      <%= hidden_field_tag "task[user_id]", '', id: 'assigned_user_id'%>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <div class="form-group">
+      <%#= f.submit "Add Task", class: "btn btn-normal btn-block" %>
+    </div>
+  </div>
+</div>
+</br>
+<script type="text/javascript">
+  $(function() {
+    $('#user_picker').autocomplete({
+      minLength: 2,
+      source: "<%= users_claim_tasks_path(@claim) %>",
+      select: function(event, ui){
+        if(ui.item.id !== undefined){
+          $('#assigned_user_id').prop('value', ui.item.id)
+        }
+      }
+    });
+  });
+</script>

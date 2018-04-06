@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180328102209) do
+ActiveRecord::Schema.define(version: 20180407054920) do
 
   create_table "calendars", force: :cascade do |t|
     t.date     "day"
@@ -188,19 +188,36 @@ ActiveRecord::Schema.define(version: 20180328102209) do
     t.index ["user_id"], name: "index_settings_on_user_id"
   end
 
+  create_table "task_hours_logs", force: :cascade do |t|
+    t.float    "minutes_logged", limit: 24
+    t.integer  "task_id"
+    t.integer  "user_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["task_id"], name: "index_task_hours_logs_on_task_id", using: :btree
+    t.index ["user_id"], name: "index_task_hours_logs_on_user_id", using: :btree
+  end
+
+  create_table "task_types", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+  end
+
   create_table "tasks", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "claim_id"
-    t.string   "task_type"
+    t.integer  "task_type_id"
+    t.string   "title"
+    t.text     "description",      limit: 65535
+    t.string   "status"
+    t.string   "milestone"
     t.string   "deliverable_type"
-    t.string   "task_name"
-    t.text     "task_description"
-    t.string   "task_status"
     t.string   "RAG_status"
     t.datetime "task_due"
     t.datetime "task_completed"
     t.integer  "minutes_logged"
     t.string   "created_by"
+    t.string   "updated_by"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.index ["claim_id"], name: "index_tasks_on_claim_id"

@@ -33,7 +33,11 @@ Rails.application.routes.draw do
     end
     resources :photos, only: [:create, :destroy]
     resources :reservations, only: [:create]
-    resources :tasks
+    resources :tasks do
+      collection do
+        get :users
+      end
+    end
     resources :calendars
     resources :contacts, controller: 'claim_contacts' do
       collection do

@@ -1,21 +1,84 @@
-<%= render 'claims/claimleftmenu' %>
-<%= render 'claims/claimsummarymenu' %>
+<%= render partial: 'claims/claimleftmenu' %>
+<%= render partial: 'claims/claimsummarymenu' %>
 
 <div class="with-iconav">
   <div class="container-fluid-middle">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            Tasks
-          </div>
-          <div class="panel-body">
-
-            <%= render 'task_form' %>
-
-          </div>
+    <div class="col-12">
+      <div class="dashhead">
+        <div class="dashhead-titles">
+          <h2 class="dashhead-title">Tasks</h2>
         </div>
       </div>
+      <div class="flextable" style="padding-bottom:20px;">
+        <div class="flextable-item">
+          <%= link_to '+Add Task', new_claim_task_path(claim_id: @claim.id)%>
+        </div>
+      </div>
+      <div class="flextable" style="padding-bottom:20px;">
+        <div class="flextable-item">
+          My Tasks
+        </div>
+      </div>
+      <div class="table-responsive">  
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Task Type</th>
+              <th>Milestone Type</th>
+              <th>Due On</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @my_tasks.each do |t| %>
+              <tr>
+                <td><%= link_to t.title, edit_claim_task_path(id: t.id, claim_id: @claim.id) %></td>
+                <td><%= t.task_type.name %></td>
+                <td><%= t.milestone %></td>
+                <td><%= t.task_due&.strftime("%d/%m/%Y") %></td>
+                <td><%= Task::STATUS_OPTIONS.to_h.invert[t.status] %></td>
+                <td><%= t.RAG_status %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <hr />    
+      <div class="flextable" style="padding-bottom:20px;">
+        <div class="flextable-item">
+          Other Tasks
+        </div>
+      </div>
+      <div class="table-responsive">  
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Task Type</th>
+              <th>Milestone Type</th>
+              <th>Assigned To</th>
+              <th>Due On</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @other_tasks.each do |t| %>
+              <tr>
+                <td><%= t.title %></td>
+                <td><%= t.task_type.name %></td>
+                <td><%= t.milestone %></td>
+                <td><%= t.asigned_user.fullname %></td>
+                <td><%= t.task_due&.strftime("%d/%m/%Y") %></td>
+                <td><%= Task::STATUS_OPTIONS.to_h.invert[t.status] %></td>
+                <td><%= t.RAG_status %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>    
     </div>
   </div>
-</div>
+</div>      
