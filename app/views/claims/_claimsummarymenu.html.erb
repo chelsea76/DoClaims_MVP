@@ -1,0 +1,194 @@
+<nav class="iconav-right">
+  <div class="iconav-right-nav">
+    <div class="panel-body">
+      <div class="container">
+        <%= form_for @claim do |f| %>
+          <table class="table table-sm claim-summary-table">
+            <tbody>
+              <tr>
+                <th scope="row">Claim ID:</th>
+                <td><%= @claim.id %></td>
+              </tr>
+              <tr>
+                <th scope="row">Claim Status:</th>
+                <td><span class="icon icon-clipboard">&nbsp; Red</span> </td>
+              </tr>
+              <tr>
+                <th scope="row">Claim Type:</th>
+                <td>
+                  <%= f.select :claim_type, [["Property", "Property"], ["Liability", "Liability"], ["Motor", "Motor"], ["Other", "Other"]], {}, {class: "claim-summary-select"}%>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Incident:</th>
+                <td>
+                  <%= f.select :incident_type, [["Accidental Damage", "Accidental Damage"], ["Escape of Water", "Escape of Water"], ["Fire", "Fire"]], {}, {class: "claim-summary-select"} %>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row"></th>
+                <td>
+                  <%= f.select :sub_incident_type, [["Sub-Type1", "Sub-Type1"], ["Sub-Type2", "Sub-Type2"], ["Sub-Type3", "Sub-Type3"]], {}, {class: "claim-summary-select"} %>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Incident Date:</th>
+                <td><%= f.text_field :claim_loss_date, value: @claim.claim_loss_date&.strftime("%d/%m/%Y"), class: "form-control", placeholder: "Incident Date", data:{ provide:'datepicker' } %></td>
+              </tr>
+              <tr>
+                <th scope="row" id="insured_summary_header" colspan="2">Insured Name:</th>
+              </tr>
+              <tr>
+                <td colspan="2">Mrs Insured Name</td>
+              </tr>
+              <tr>
+                <th scope="row" id="location_summary_header" colspan="2">Location:</th>
+              </tr>
+              <tr>
+                <td colspan="2"><%= link_to @claim.address, location_claim_path(@claim) %></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="row">
+            <%= f.submit "Save", class: "btn btn-normal" %>
+          </div>
+        <% end %>
+    </div>
+  </div>
+
+  </br>
+  <div class="panel-body">
+    <div class="container">
+      <%= render 'tasks/task_form' %>
+    </div>
+  </div>
+
+  </br>
+
+  <!-- <img src="/assets/Timeline.jpeg" class="img-thumbnail" /> -->
+
+</nav>
+
+<!--
+<nav class="iconav-right">
+  <div class="iconav-right-nav">
+    <table class="table table-sm claim-summary-table">
+      <tbody>
+        <tr>
+          <th scope="row">Claim ID:</th>
+          <td><%= @claim.id %></td>
+        </tr>
+        <tr>
+          <th scope="row">Claim Status:</th>
+          <td><span class="icon icon-clipboard">&nbsp; Red</span> </td>
+        </tr>
+        <tr>
+          <th scope="row">Claim Type:</th>
+          <td><%= @claim.claim_type %></td>
+        </tr>
+        <tr>
+          <th scope="row">Incident:</th>
+          <td><%= @claim.incident_type %></td>
+        </tr>
+        <tr>
+          <th scope="row"></th>
+          <td><%= @claim.sub_incident_type %></td>
+        </tr>
+        <tr>
+          <th scope="row">Incident Date:</th>
+          <td>11th Jan 2018</td>
+        </tr>
+        <tr>
+          <th scope="row">Insured Name:</th>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Location:</th>
+          <td><%#= link_to @claim.address, location_claim_path %></td>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <h6 id="filter" data-toggle="collapse" data-target="#collapseCarrier">
+        Carrier Details <i class='icon icon-chevron-small-down'></i>
+      </h6>
+    </div>
+    <div  class="collapse" id="collapseCarrier">
+      <table class="table table-sm claim-summary-table">
+        <tbody>
+          <tr>
+            <th scope="row">Carrier:</th>
+            <td>Allianz</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</nav>
+
+
+<nav class="iconav-right">
+  <div class="iconav-right-nav">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse"  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Collapsible Group Item #1
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse"  href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Collapsible Group Item #2
+            </a>
+          </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse"  href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Collapsible Group Item #3
+            </a>
+          </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav> -->
+
+
+
+
+<!-- <script>
+  var open = true;
+
+  $('#filter').click(function() {
+    if (open) {
+      $('#filter').html("Carrier Details <i class='icon icon-chevron-small-up'></i>")
+    } else {
+      $('#filter').html("Carrier Details <i class='icon icon-chevron-small-down'></i>")
+    }
+    open = !open;
+  });
+</script> -->

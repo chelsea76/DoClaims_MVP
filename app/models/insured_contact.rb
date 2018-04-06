@@ -1,0 +1,2 @@
+class InsuredContact < Contact
+end

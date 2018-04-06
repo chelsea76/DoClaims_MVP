@@ -1,0 +1,2 @@
+class BuilderContact < Contact
+end

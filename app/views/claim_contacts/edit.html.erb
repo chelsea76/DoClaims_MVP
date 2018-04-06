@@ -1,0 +1,32 @@
+<% if flash[:errors].present? %>
+  <script type="text/javascript">
+    <% flash[:errors].each do |value| %>
+      toastr.error('<%= value %>')
+    <% end %>
+  </script>
+<% end %>
+<%= render partial: 'claims/claimleftmenu' %>
+<%= render partial: 'claims/claimsummarymenu' %>
+<div class="with-iconav">
+  <div class="container-fluid-middle">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Contact Details
+          </div>
+          </br>
+          <div class="panel-body">
+            <%= form_for(@contact, as: :contact, url: "/claims/#{@claim.id}/contacts/#{@contact.id}", method: "put") do |f| %>
+              <%= render partial: 'form', locals: { f: f }%>
+              <div class="text-center">
+                <%= f.submit "Save", class: "btn btn-form" %>
+                <%= link_to 'Cancel', claim_contacts_path(@claim), class: "btn cancel-btn"%>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

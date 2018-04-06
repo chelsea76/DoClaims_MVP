@@ -1,0 +1,142 @@
+
+<!-- variables for the class: property - move to helper or controller? -->
+<% if current_page?(listing_claim_path(@claim)) %>
+  <%  @claim_details_class = "nav-link active" %>
+<% else %>
+  <%  @claim_details_class = "nav-link" %>
+<% end %>
+
+<% if current_page?(claim_contacts_path(@claim)) || params[:controller] == 'claim_contacts'%>
+  <%  @contacts_class = "nav-link active" %>
+<% else %>
+  <%  @contacts_class = "nav-link" %>
+<% end %>
+
+<% if current_page?(location_claim_path(@claim)) %>
+  <%  @location_class = "nav-link active" %>
+<% else %>
+  <%  @location_class = "nav-link" %>
+<% end %>
+
+<% if current_page?(claim_damages_path(@claim)) || params[:controller] == 'damages'%>
+  <%  @damages_class = "nav-link active" %>
+<% else %>
+  <%  @damages_class = "nav-link" %>
+<% end %>
+
+<% if current_page?(pricing_claim_path(@claim)) %>
+  <%  @reserves_class = "nav-link active" %>
+<% else %>
+  <%  @reserves_class = "nav-link" %>
+<% end %>
+
+<% if current_page?(photo_upload_claim_path(@claim)) %>
+  <%  @photos_class = "nav-link active" %>
+<% else %>
+  <%  @photos_class = "nav-link" %>
+<% end %>
+
+<% if current_page?(root_path) %>
+  <%  @documents_class = "nav-link active" %>
+<% else %>
+  <%  @documents_class = "nav-link" %>
+<% end %>
+
+<% if current_page?(amenities_claim_path(@claim)) %>
+  <%  @claim_criteria_class = "nav-link active" %>
+<% else %>
+  <%  @claim_criteria_class = "nav-link" %>
+<% end %>
+
+<% if current_page?(claim_tasks_claim_path(@claim)) %>
+  <%  @tasks_class = "nav-link active" %>
+<% else %>
+  <%  @tasks_class = "nav-link" %>
+<% end %>
+
+<% @publish_class = "nav-link disabled" %>
+
+
+<nav class="iconav">
+  <div class="iconav-slider">
+      <ul class="nav nav-pills iconav-nav flex-md-column">
+        <li class="nav-item"></li>  <!--for some reason, the first item when 'active' shows in different format-->
+        <li class="nav-item">
+          <%= link_to listing_claim_path(@claim), class: @claim_details_class, title: "Claim Details", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
+            <span class="icon icon-clipboard">&nbsp; Claim Details</span>
+            <!-- <% if !@claim.address.blank? %>
+              <span class="icon icon-check fl-right grey_green"></span>
+            <% end %> -->
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to claim_contacts_path(@claim), class: @contacts_class, title: "Contacts", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
+            <span class="icon icon-users">&nbsp; Contacts</span>
+            <!-- <% if !@claim.address.blank? %>
+              <span class="icon icon-check fl-right grey_green"></span>
+            <% end %> -->
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to location_claim_path(@claim), class: @location_class, title: "Location", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
+            <span class="icon icon-location-pin">&nbsp; Location</span>
+            <% if !@claim.address.blank? %>
+              <span class="icon icon-check fl-right grey_green"></span>
+            <% end %>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to claim_damages_path(@claim), class: @damages_class, title: "Damages", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
+            <span class="icon icon-warning">&nbsp; Damages</span>
+            <!-- <% if !@claim.address.blank? %>
+              <span class="icon icon-check fl-right grey_green"></span>
+            <% end %> -->
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to pricing_claim_path(@claim), class: @reserves_class, title: "Reserves", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
+            <span class="icon icon-credit">&nbsp; Reserves</span>
+            <!-- <% if !@claim.address.blank? %>
+              <span class="icon icon-check fl-right grey_green"></span>
+            <% end %> -->
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to photo_upload_claim_path(@claim), class: @documents_class, title: "Documents", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
+            <span class="icon icon-documents">&nbsp; Documents</span>
+            <!-- <% if !@claim.address.blank? %>
+              <span class="icon icon-check fl-right grey_green"></span>
+            <% end %> -->
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to amenities_claim_path(@claim), class: @claim_criteria_class, title: "Claim Criteria", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
+            <span class="icon icon-sound-mix">&nbsp; Claim Criteria</span>
+            <!-- <% if !@claim.address.blank? %>
+              <span class="icon icon-check fl-right grey_green"></span>
+            <% end %> -->
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to claim_tasks_claim_path(@claim), class: @tasks_class, title: "Tasks", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
+            <span class="icon icon-list">&nbsp; Tasks</span>
+            <!-- <% if !@claim.address.blank? %>
+              <span class="icon icon-check fl-right grey_green"></span>
+            <% end %> -->
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to amenities_claim_path(@claim), class: @publish_class, title: "Publish", disabled: "true", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
+            <span class="icon icon-publish">&nbsp; Publish</span>
+          <% end %>
+          <!-- Logic for making 'publish' button disable/enable when done.
+          <% is_ready = !@claim.active && !@claim.price.blank? && !@claim.listing_name.blank? && !@claim.photos.blank? && !@claim.address.blank? %>
+
+          <%= form_for @claim do |f| %>
+            <%= f.hidden_field :active, value: true %>
+            <%= f.submit "Publish", id: "publish_button", class: "btn btn-normal btn-block", disabled: !is_ready %>
+          <% end %> -->
+        </li>
+      </ul>
+  </div>
+</nav>

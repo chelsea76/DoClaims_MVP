@@ -1,0 +1,182 @@
+class ClaimsController < ApplicationController
+  before_action :set_claim, except: [:index, :new, :create]
+  before_action :authenticate_user!, except: [:show]
+  before_action :is_authorised, only: [:listing, :pricing, :description, :photo_upload, :amenities, :location, :update, :claim_tasks]
+
+  def index
+    @claims = current_user.claims
+  end
+
+  def new
+    @claim = current_user.claims.build
+    @photos = @claim.photos
+  end
+
+  def create
+
+    @claim = current_user.claims.build(claim_params)
+    if @claim.save
+      if params[:images]
+        params[:images].each do |img|
+          @claim.photos.create(image: img)
+        end
+      end
+      redirect_to listing_claim_path(@claim), notice: "Saved..."
+    else
+      flash[:alert] = "Something went wrong."
+      render :new
+    end
+  end
+
+  def show
+    @photos = @claim.photos
+    @guest_reviews = @claim.guest_reviews
+  end
+
+  def listing
+    @photos = @claim.photos
+    @insured_contact = @claim.claim_insured_contact || @claim.contacts.new(type: 'InsuredContact')
+    @claimant_contact = @claim.claim_claimant_contact || @claim.contacts.new(type: 'OtherContact')
+  end
+
+  def pricing
+  end
+
+  def description
+  end
+
+  def photo_upload
+    @photos = @claim.photos
+  end
+
+  def claim_tasks
+    @claim_tasks = @claim.tasks
+  end
+
+  def amenities
+  end
+
+  def location
+  end
+
+  def update
+
+    new_params = claim_params
+    new_params = claim_params.merge(active: true) if is_ready_claim
+    @photos = @claim.photos
+    if @claim.update(new_params)
+      if params[:images]
+        params[:images].each do |img|
+          @claim.photos.create(image: img)
+        end
+      end
+      @insured_contact =  @claim.claim_insured_contact || @claim.contacts.new(insured_contact_params.merge!(type: 'InsuredContact'))
+      @claimant_contact = @claim.claim_claimant_contact || @claim.contacts.new(claimant_contact_params.merge!(type: 'OtherContact'))
+      render action: :listing and return false unless update_insured_contact
+      render action: :listing and return false unless update_claimant_contact
+      flash[:notice] = "Saved..."
+    else
+      flash[:alert] = "Something went wrong..."
+    end
+    render action: :listing  and return false
+  end
+
+  def update_insured_contact
+    if @claim.claim_insured_contact.present?
+      @insured_contact = @claim.claim_insured_contact
+      unless @insured_contact.update(insured_contact_params)
+        flash[:alert] = @insured_contact.errors.full_messages
+        return false
+      end
+      return true
+    else
+      @insured_contact = @claim.contacts.new(insured_contact_params.merge!(type: 'InsuredContact'))
+      if @insured_contact.save
+        @claim.claim_contact_mappings << ClaimContactMapping.new(for_claim: true, contact: @insured_contact)
+        return true
+      else
+        flash[:alert] = @insured_contact.errors.full_messages
+        return false
+      end
+    end
+  end
+
+  def update_claimant_contact
+    if @claim.claim_claimant_contact.present?
+      @claimant_contact = @claim.claim_claimant_contact
+      unless @claimant_contact.update(claimant_contact_params)
+        flash[:alert] = @claimant_contact.errors.full_messages
+        return false
+      end
+      return true
+    else
+      @claimant_contact = @claim.contacts.new(claimant_contact_params.merge!(type: 'OtherContact'))
+      if @claimant_contact.save
+        @claim.claim_contact_mappings << ClaimContactMapping.new(for_claim: true, contact: @claimant_contact)
+        return true
+      else
+        flash[:alert] = @claimant_contact.errors.full_messages
+        return false
+      end
+    end
+  end
+
+  # --- Reservations ---
+  def preload
+    today = Date.today
+    reservations = @claim.reservations.where("(start_date >= ? OR end_date >= ?) AND status = ?", today, today, 1)
+    unavailable_dates = @claim.calendars.where("status = ? AND day > ?", 1, today)
+
+    special_dates = @claim.calendars.where("status = ? AND day > ? AND price <> ?",0, today, @claim.price)
+
+    render json: {
+        reservations: reservations,
+        unavailable_dates: unavailable_dates,
+        special_dates: special_dates
+    }
+  end
+
+  def preview
+    start_date = Date.parse(params[:start_date])
+    end_date = Date.parse(params[:end_date])
+
+    output = {
+      conflict: is_conflict(start_date, end_date, @claim)
+    }
+
+    render json: output
+  end
+
+
+  private
+    def is_conflict(start_date, end_date, claim)
+      check = claim.reservations.where("(? < start_date AND end_date < ?) AND status = ?", start_date, end_date, 1)
+      check_2 = claim.calendars.where("day BETWEEN ? AND ? AND status = ?", start_date, end_date, 1).limit(1)
+
+      check.size > 0 || check_2.size > 0 ? true : false
+    end
+
+    def set_claim
+      @claim = Claim.find(params[:id])
+    end
+
+    def is_authorised
+      redirect_to root_path, alert: "You don't have permission" unless current_user.id == @claim.user_id
+    end
+
+    def is_ready_claim
+      !@claim.active && !@claim.price.blank? && !@claim.listing_name.blank? && !@claim.photos.blank? && !@claim.address.blank?
+    end
+
+    def claim_params
+      params.require(:claim).permit(:claim_type, :incident_type, :sub_incident_type, :status, :policy_ref, :claim_reported_date, :claim_loss_date, :claim_reference_carrier, :claim_reference_external, :claim_reference_external_note, :listing_name, :summary, :address, :is_contents, :is_commercial, :price, :active, :instant, :insurer)
+    end
+
+    def insured_contact_params
+      params.require(:insured_contact).permit(:firstname, :lastname, :email, :mobile, :number, :street, :city, :postcode, :state, :country, :con_type)
+    end
+
+    def claimant_contact_params
+      params.require(:other_contact).permit(:firstname, :lastname, :email, :mobile, :number, :street, :city, :postcode, :state, :country, :con_type)
+    end
+  end

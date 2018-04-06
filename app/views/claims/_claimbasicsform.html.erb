@@ -1,0 +1,155 @@
+
+
+<div class="with-iconav">
+  <div class="container-fluid-middle">
+    <div class="row">
+
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Register a Claim
+          </div>
+          <div class="panel-body">
+            <div class="container">
+
+              <%= form_for @claim, html: {multipart: true} do |f| %>
+
+                <h3>Claim Details</h3>
+                <div class="row">
+                  <div class="col-md-4 select">
+                    <div class="form-group">
+                      <label>Incident Type</label>
+                      <%= f.select :incident_type, [["Accidental Damage", "Accidental Damage"], ["Escape of Water", "Escape of Water"], ["Fire", "Fire"]], {}, {class: "form-control"} %>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 select">
+                    <div class="form-group">
+                      <label>Incident Sub-Type</label>
+                      <%= f.select :sub_incident_type, [["Sub-Type1", "Sub-Type1"], ["Sub-Type2", "Sub-Type2"], ["Sub-Type3", "Sub-Type3"]], {}, {class: "form-control"} %>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 select">
+                    <div class="form-group">
+                      <label>Claim Type</label>
+                      <%= f.select :claim_type, [["Property", "Property"], ["Liability", "Liability"], ["Motor", "Motor"], ["Other", "Other"]], {}, {class: "form-control"}%>
+                    </div>
+                  </div>
+                </div>
+
+                </br>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Date of Incident</label>
+                      <%= f.text_field :claim_loss_date, class: "form-control", placeholder: "Incident Date", data:{ provide:'datepicker' } %>
+                    </div>
+                  </div>
+                  <div class="col-md-4 select">
+                    <div class="form-group">
+                      <label>&nbsp; Make Safe Required? </label>
+                      <%= f.select :wkflow_makesafe, [["No", "f"], ["Yes", "t"]], {}, {class: "form-control"}%>
+                    </div>
+                  </div>
+                </div>
+
+                </br>
+                <h3>Insurer Details</h3>
+                <div class="row">
+
+                  <div class="col-md-4 select">
+                    <div class="form-group">
+                      <label>Insurer</label>
+                      <%= f.select :insurer, options_for_select(Claim::INSURER_OPTIONS, @claim.insurer) , {}, {class: 'form-control'} %>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Date Reported</label>
+                      <%= f.text_field :claim_reported_date, class: "form-control", data:{ provide:'datepicker' } %>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Policy Reference</label>
+                      <%= f.text_field :policy_ref, class: "form-control" %>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="col-md-4">
+                    <!-- <div class="form-group">
+                      <label>Insurer - sub category</label>
+                      <select class="form-control" id="insurer_sub" placeholder="Select...">
+                        <option>Sub 1</option>
+                        <option>Sub 2</option>
+                        <option>Sub 3</option>
+                        <option>Sub 4</option>
+                        <option>Sub 5</option>
+                      </select>
+                    </div> -->
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Claim Reference</label>
+                      <select class="form-control" id="claim_ref"></select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>External Claim Reference</label>
+                      <select class="form-control" id="ext_claim_ref"></select>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Photos</label>
+                      <span class="btn btn-default btn-file text-babu">
+                        <i class="fa fa-cloud-upload" aria-hidden="true"></i> Select Photos
+                        <%= file_field_tag "images[]", type: :file, multiple: true %>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div><%= f.submit "Create Claim", class: "btn btn-normal" %></div>
+
+              </br></br>
+                <div class="row">
+                  <div class="col-md-4 select">
+                    <div class="form-group">
+                      <label>Bedrooms</label>
+                      <%= f.select :bed_room, [["1", 1], ["2", 2], ["3", 3], ["4+", 4]],
+                                    id: "bed_room", prompt: "Select...", class: "form-control" %>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 select">
+                    <div class="form-group">
+                      <label>Bathrooms</label>
+                      <%= f.select :bath_room, [["1", 1], ["2", 2], ["3", 3], ["4+", 4]],
+                                    id: "bath_rooms", prompt: "Select...", class: "form-control" %>
+                    </div>
+                  </div>
+                </div>
+
+
+              <% end %>
+
+            </div>
+          </div>
+
+        </div>

@@ -1,0 +1,2 @@
+class OtherContact < Contact
+end

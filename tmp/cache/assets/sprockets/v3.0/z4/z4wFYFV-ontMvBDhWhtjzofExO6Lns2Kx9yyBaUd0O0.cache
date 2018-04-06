@@ -1,0 +1,16 @@
+I"“(function() {
+  $(function() {
+    return App.notifications = App.cable.subscriptions.create({
+      channel: "NotificationsChannel",
+      id: $('#user_id').val()
+    }, {
+      received: function(data) {
+        $('#num_of_unread').html(data.unread);
+        $('#notifications').prepend(data.message);
+        return $('#navbar_num_of_unread').html(data.unread);
+      }
+    });
+  });
+
+}).call(this);
+:ET

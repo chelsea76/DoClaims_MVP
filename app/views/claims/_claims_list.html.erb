@@ -1,0 +1,21 @@
+<% claims.each do |claim| %>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading preview">
+          <%= image_tag claim.cover_photo(:medium) %>
+        </div>
+        <div class="panel-body">
+          <%= link_to claim.listing_name, claim %><br/>
+          <%= claim.price %> - <%= claim.incident_type %> - <%= pluralize(claim.bed_room, "bed") %>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $('#star_<%= claim.id %>').raty({
+        path: '/assets',
+        readOnly: true,
+        score: <%= claim.average_rating %>
+      });
+    </script>
+<% end %>

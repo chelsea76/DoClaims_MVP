@@ -1,0 +1,30 @@
+<% if flash[:errors].present? %>
+  <script type="text/javascript">
+    <% flash[:errors].each do |value| %>
+      toastr.error('<%= value %>')
+    <% end %>
+  </script>
+<% end %>
+<%= render 'dashboards/dashboardleftmenu' %>
+<div class="with-iconav">
+  <div class="container-fluid-middle">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Contact Details
+          </div>
+          </br>
+          <div class="panel-body">
+            <%= form_for(@contact, as: :contact, url: "/users/#{@user.id}/contacts/#{@contact.id}", method: "put") do |f| %>
+              <%= render partial: 'form', locals: { f: f }%>
+              <div class="text-center">
+                <%= f.submit "Save", class: "btn btn-form" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

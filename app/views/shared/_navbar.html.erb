@@ -1,0 +1,54 @@
+
+
+<nav class="navbar navbar-expand-sm fixed-top navbar-dark bg-dark app-navbar">
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <img src="/assets/LogoDkGWht_sm.png" class="navbar-brand-icon" alt="">
+    <% end %>
+
+  <!-- Toggle (hamburger) shown when screen gets too small for menu -->
+    <button
+      class="navbar-toggler navbar-toggler-right d-md-none"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarResponsive"
+      aria-controls="navbarResponsive"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <%= form_tag search_path, class: "form-inline d-none d-md-flex ml-auto pl-sm-5", method: :get do %>
+        <div class="form-group">
+          <%= text_field_tag :search, params[:search], placeholder: "Search", class: "form-control" %>
+        </div>
+    <% end %>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
+      <ul class="nav navbar-nav align-items-end">
+        <li class="nav-item"><%= link_to "Register a Claim", new_claim_path, class: "nav-link" %></li>
+
+        <% if (!user_signed_in?) %>
+            <li class="nav-item"><%= link_to "Login", new_user_session_path, class: "nav-link" %></li>
+            <li class="nav-item"><%= link_to "Sign Up", new_user_registration_path, class: "nav-link" %></li>
+        <% else %>
+        <li class="avatar-dropdown">
+          <a href="#" data-toggle="dropdown"
+                role="button" aria-haspopup="true" aria-expanded="false">
+                <%= image_tag avatar_url(current_user), class: "rounded-circle img-fluid-sm" %>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li class="dropdown-item-dark"><%= link_to "Dashboard", dashboard_path %></li>
+            <li class="dropdown-item-dark"><%= link_to "Claims", claims_path %></li>
+            <!-- <li class="dropdown-item-dark"><%= link_to "List Your Space", new_claim_path %></li> -->
+            <li class="dropdown-item-dark"><%= link_to "Bids", your_reservations_path %></li>
+            <li class="dropdown-item-dark"><%= link_to "My Tasks", my_tasks_path %></li>
+            <!-- <li role="separator" class="divider"></li> -->
+            <li class="dropdown-item-dark"><%= link_to "Profile", user_path(current_user.id) %></li>
+            <li class="dropdown-item-dark"><%= link_to "Log out", destroy_user_session_path, method: :delete %></li>
+          </ul>
+        </li>
+
+        <% end %>
+      </ul>
+    </div>
+</nav>

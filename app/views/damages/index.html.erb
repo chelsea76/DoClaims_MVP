@@ -1,0 +1,61 @@
+<%= render partial: 'claims/claimleftmenu' %>
+<%= render partial: 'claims/claimsummarymenu' %>
+
+<div class="with-iconav">
+  <div class="container-fluid-middle">
+    <div class="col-12">
+      <div class="dashhead">
+        <div class="dashhead-titles">
+          <h2 class="dashhead-title">Damages</h2>
+        </div>
+      </div>
+      <div class="flextable" style="padding-bottom:20px;">
+        <div class="flextable-item">
+          <%= link_to '+Add Damage', new_claim_damage_path(claim_id: @claim.id)%>
+        </div>
+      </div>
+      <div class="panel-body">
+        <% @damages.each do |damage| %>
+          <div class="row">
+            <div class="col-md-2">
+              <%= image_tag damage.cover_photo(:thumb) %>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group">
+                <label>Summary :</label>
+                <%= link_to damage.summary, claim_damage_path(id: damage.id, claim_id: @claim.id) %>
+              </div>
+              <div class="form-group">
+                <label>Type :</label>
+                <%= damage.damage_type.present? ? damage.damage_type : "None" %>
+              </div>
+              <div class="form-group">
+                <label>Sub Type :</label>
+                <%= damage.sub_type.present? ? damage.sub_type : "None" %>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Product Cost :</label>
+                <%= damage.product_cost.present? ? damage.product_cost : 0.0 %> $
+              </div>
+              <div class="form-group">
+                <label>Labour Cost :</label>
+                <%= damage.labour_cost.present? ? damage.labour_cost : 0.0 %> $
+              </div>
+              <div class="form-group">
+                <label>Total Cost :</label>
+                <%= damage.product_cost.to_f + damage.labour_cost.to_f  %> $
+              </div>
+            </div>
+            <div class="col-md-2">
+              <%= link_to 'Edit', edit_claim_damage_path(claim_id: @claim.id, id: damage.id)%>
+              <%= link_to 'Delete', "/claims/#{@claim.id}/damages/#{damage.id}", data: {confirm: "Are you sure?"}, method: :delete%>
+            </div>
+          </div>  
+          <hr/>
+        <% end %>
+      </div>
+    </div>      
+  </div>
+</div>

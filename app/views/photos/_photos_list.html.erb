@@ -1,0 +1,23 @@
+<% if @photos.count > 0 %>
+  <br/><br/>
+
+  <div class="row">
+    <% @photos.each do |photo| %>
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading preview">
+            <%= image_tag photo.image.url(), style: 'width:100%' %>
+          </div>
+          <div class="panel-body">
+            <span class="pull-right">
+              <%= link_to claim_photo_path(photo.claim_id, photo), remote: true, method: :delete, data: {confirm: "Are you sure?"} do %>
+                <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                Delete
+              <% end %>
+            </span>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,32 @@
+<%= render 'dashboards/dashboardleftmenu' %>
+
+<div class="with-iconav">
+  <div class="container-fluid-middle">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            My Tasks
+          </div>
+          <div class="panel-body">
+
+            <% @my_tasks.each do |task| %>
+              <div class="row">
+                <div class="col-md-2">
+                  <%= task.task_type %>
+                </div>
+                <div class="col-md-7">
+                  <h4><%= task.task_name %></h4>
+                </div>
+                <div class="col-md-3 right">
+
+                </div>
+              </div>
+              <hr/>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

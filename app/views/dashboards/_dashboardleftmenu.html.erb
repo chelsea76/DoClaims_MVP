@@ -1,0 +1,80 @@
+<!-- variables for the class: property - move to helper or controller? -->
+<% if current_page?(claims_path) %>
+  <%  @claims_class = "nav-link active" %>
+<% else %>
+  <%  @claims_class = "nav-link" %>
+<% end %>
+<% if current_page?(your_reservations_path) %>
+  <%  @bids_class = "nav-link active" %>
+<% else %>
+  <%  @bids_class = "nav-link" %>
+<% end %>
+<% if current_page?(my_tasks_path) %>
+  <%  @tasks_class = "nav-link active" %>
+<% else %>
+  <%  @tasks_class = "nav-link" %>
+<% end %>
+<% if current_page?(search_path) %>
+  <%  @findwork_class = "nav-link active" %>
+<% else %>
+  <%  @findwork_class = "nav-link" %>
+<% end %>
+<% if current_page?(user_path(current_user.id)) %>
+  <%  @profile_class = "nav-link active" %>
+<% else %>
+  <%  @profile_class = "nav-link" %>
+<% end %>
+<% if current_page?(root_path) %>
+  <%  @reputation_class = "nav-link active" %>
+<% else %>
+  <%  @reputation_class = "nav-link" %>
+<% end %>
+<% if current_page?(root_path) %>
+  <%  @help_class = "nav-link active" %>
+<% else %>
+  <%  @help_class = "nav-link" %>
+<% end %>
+
+
+<nav class="iconav">
+  <div class="iconav-slider">
+      <ul class="nav nav-pills iconav-nav flex-md-column">
+        <li class="nav-item"></li>  <!--for some reason, the first item when 'active' shows in different format-->
+        <li class="nav-item">
+          <%= link_to claims_path, class: @claims_class, title: "Claims", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
+            <span class="icon icon-clipboard">&nbsp; Claims</span>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to your_reservations_path, class: @bids_class, title: "Bids", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
+            <span class="icon icon-calculator">&nbsp; Bids</span>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to my_tasks_path, class: @tasks_class, title: "Tasks", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
+            <span class="icon icon-list">&nbsp; My Tasks</span>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to search_path, class: @findwork_class, title: "Find Work", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
+            <span class="icon icon-hair-cross">&nbsp; Find Work</span>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to root_path, class: @reputation_class, title: "Reputation", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
+            <span class="icon icon-price-ribbon">&nbsp; Reputation</span>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to user_path(current_user.id), class: @profile_class, title: "Profile", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
+            <span class="icon icon-v-card">&nbsp; Profile</span>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to root_path, class: @help_class, title: "Help", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
+            <span class="icon icon-help">&nbsp; Help</span>
+          <% end %>
+        </li>
+      </ul>
+  </div>
+</nav>

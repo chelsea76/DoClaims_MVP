@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DoClaims 1.0</title>
+    <%= csrf_meta_tags %>
+    <%= action_cable_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %> <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdoZCrKDvW-jsW7fIDogjNzs9X23qqmIU&libraries=places"></script>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/redmond/jquery-ui.css">
+    <!-- <link rel="stylesheet" href="" -->
+  </head>
+
+  <body class="with-top-navbar">
+    <%= render 'shared/navbar' %>
+    <%= render 'shared/message' %>
+
+
+
+    <% if current_user %>
+      <input type="hidden" id="user_id" value="<%= current_user.id %>">
+    <% end %>
+
+    <div>
+      <%= yield %>
+    </div>
+
+  </body>
+</html>
+
+<!-- Styles for jquery themes
+base black-tie blitzer cupertino dark-hive dot-luv eggplant excite-bike flick hot-sneaks humanity le-frog mint-choc overcast pepper-grinder redmond smoothness south-street start sunny swanky-purse trontastic ui-darkness ui-lightness vader -->

@@ -1,0 +1,2 @@
+class BrokerContact < Contact
+end

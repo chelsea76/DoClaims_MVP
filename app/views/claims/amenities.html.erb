@@ -1,0 +1,55 @@
+<%= render 'claimleftmenu' %>
+<%= render 'claimsummarymenu' %>
+
+<div class="with-iconav">
+  <div class="container-fluid-middle">
+    <div class="row">
+      <div class="col-md-3">
+
+      </div>
+      <div class="col-md-9">
+        <div class="panel panel-default">
+
+          <div class="panel-heading">
+            Amenities
+          </div>
+
+          <div class="panel-body">
+            <div class="container">
+              <%= form_for @claim do |f| %>
+
+                  <div class="row form-group">
+                    <div class="col-md-4">
+                      <%= f.check_box :is_contents %> Contents
+                    </div>
+                    <div class="col-md-4">
+                      <%= f.check_box :is_commercial %> Commercial
+                    </div>
+                    <div class="col-md-4">
+                      <%= f.check_box :wkflow_QA %> QA Required
+                    </div>
+                  </div>
+
+                  <div class="row form-group">
+                    <div class="col-md-4">
+                      <%= f.check_box :wkflow_first_and_final %> First and Final
+                    </div>
+                    <div class="col-md-4">
+                      <%= f.check_box :wkflow_site_visit %> Site Visit?
+                    </div>
+                  </div>
+                  <br/><br/>
+
+                  <div class="text-center">
+                    <%= f.submit "Save", class: "btn btn-form" %>
+                  </div>
+
+              <% end %>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

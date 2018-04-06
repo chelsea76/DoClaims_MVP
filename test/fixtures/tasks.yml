@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  claim: one
+  task_type: MyString
+  deliverable_type: MyString
+  task_name: MyString
+  task_description: MyText
+  task_status: MyString
+  RAG_status: MyString
+  task_due: 2018-02-25 13:29:56
+  task_completed: 2018-02-25 13:29:56
+  minutes_logged: 1
+
+two:
+  user: two
+  claim: two
+  task_type: MyString
+  deliverable_type: MyString
+  task_name: MyString
+  task_description: MyText
+  task_status: MyString
+  RAG_status: MyString
+  task_due: 2018-02-25 13:29:56
+  task_completed: 2018-02-25 13:29:56
+  minutes_logged: 1

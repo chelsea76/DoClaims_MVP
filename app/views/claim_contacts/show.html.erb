@@ -1,0 +1,61 @@
+<%= render partial: 'claims/claimleftmenu' %>
+<%= render partial: 'claims/claimsummarymenu' %>
+
+<div class="with-iconav">
+  <div class="container-fluid-middle">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Contact Details
+          </div>
+          </br>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>First Name :</label>
+                  <%= @contact.firstname || "None" %>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Last Name :</label>
+                  <%= @contact.lastname || "None" %>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Email :</label>
+                  <%= @contact.email || "None" %>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Type :</label>
+                  <%= Contact::TYPE_OPTIONS.to_h.invert[@contact.type] %>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Mobile :</label>
+                  <%= @contact.mobile.present? ? @contact.mobile : "None"%>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Office :</label>
+                  <%= @contact.office.present? ? @contact.office : "None" %>
+                </div>
+              </div>
+            </div>  
+            <%= link_to 'Edit', edit_claim_contact_path(claim_id: @claim.id, id: @contact.id), class: "btn btn-normal"%>
+            <%= link_to 'Delete', "/claims/#{@claim.id}/contacts/#{@contact.id}", method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-normal"%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

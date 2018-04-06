@@ -1,0 +1,101 @@
+<nav class="iconav-right">
+  <div class="iconav-right-nav">
+    <div class="panel-body">
+      <div class="container">
+        <div>
+          <h5>Search Filters</h5>
+          <%= search_form_for @search, url: search_path, remote: true do |f| %>
+
+              <div class="row">
+                <div class="col-md-5">
+                  <label>Min Price:</label>
+                  <%= f.text_field :price_gteq, class: "form-control" %>
+                </div>
+                <div class="col-md-5">
+                  <label>Max Price:</label>
+                  <%= f.text_field :price_lteq, class: "form-control" %>
+                </div>
+              </div>
+              <hr/>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <%= text_field_tag :start_date, params[:start_date], readonly: true, placeholder: "Start Date", class: "form-control datepicker" %>
+                </div>
+                <div class="col-md-6">
+                  <%= text_field_tag :end_date, params[:end_date], readonly: true, placeholder: "End Date", class: "form-control datepicker" %>
+                </div>
+              </div>
+              <hr/>
+
+              <div class="row">
+                <div class="col-md-4">
+                  <%= check_box_tag "q[claim_type_eq_any][]", "Entire" %> Entire Room
+                </div>
+                <div class="col-md-4">
+                  <%= check_box_tag "q[claim_type_eq_any][]", "Private" %> Private
+                </div>
+                <div class="col-md-4">
+                  <%= check_box_tag "q[claim_type_eq_any][]", "Shared" %> Shared
+                </div>
+              </div>
+              <hr/>
+
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group select">
+                    <label>Policy Reference</label>
+                    <%= f.text_field :policy_ref_gteq, class: "form-control" %>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group select">
+                    <label>Bedrooms</label>
+                    <%= f.select :bed_room_gteq, [["1", 1], ["2", 2], ["3", 3], ["4+", 4]], id: "bed_room", prompt: "Select...", class: "form-control" %>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group select">
+                    <label>Bathrooms</label>
+                    <%= f.select :bath_room_gteq, [["1", 1], ["2", 2], ["3", 3], ["4+", 4]], id: "bath_rooms", prompt: "Select...", class: "form-control" %>
+                  </div>
+                </div>
+              </div>
+              <hr/>
+
+              <div class="row">
+                <div>
+                  <%= check_box_tag "q[is_contents_eq]", true %> Contents
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <%= check_box_tag "q[is_commercial_eq]", true %> Commercial
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <%= check_box_tag "q[wkflow_QA_eq]", true %> QA Required
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <%= check_box_tag "q[wkflow_first_and_final_eq]", true %> First and Final
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <%= check_box_tag "q[wkflow_site_visit_eq]", true %> Site Visit?
+                </div>
+              </div>
+              <hr/>
+
+              <div class="row text-center">
+                <%= f.submit "Search", class: "btn btn-form" %>
+              </div>
+          <% end %>
+        </div>
+        <br/>
+    </div>
+  </div>
+</nav>

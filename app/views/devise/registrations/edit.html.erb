@@ -1,0 +1,152 @@
+<%= render 'dashboards/dashboardleftmenu' %>
+
+
+<div class="with-iconav">
+  <div class="container-fluid-middle">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Edit Profile
+          </div>
+          </br>
+          <div class="panel-body">
+            <!-- <div class="container-fluid-middle"> -->
+              <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+                <%= render 'shared/devisemes' %>
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label>Name and Description</label>
+                    <%= f.text_field :fullname, autofocus: false, placeholder: "Full Name", class: "form-control" %>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Change Password</label>
+                    <%= f.password_field :password, autocomplete: "off", placeholder: "New password (leave blank if you don't wish to change it)", class: "form-control" %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <%= f.text_area :description, rows: 5, cols: 25, autofocus: false, placeholder: "Description", class: "form-control" %>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Confirm password", class: "form-control" %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label>Email</label>
+                    <%= f.email_field :email, autofocus: false, placeholder: "Email", class: "form-control" %>
+                  </div>
+
+                  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+                  <% end %>
+                </div>
+              </div>
+              </br>
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label>Preferred Location</label>
+                    <%= f.text_field :preferred_location, placeholder: "What is your address?", class: "form-control", required: false, id: "autoaddress" %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+
+              </div>
+              <!-- <div class="row"> -->
+                <div class="text-center">
+                  <%= f.submit "Save", class: "btn btn-form" %>
+                </div>
+                <% end %>
+              <!-- </div> -->
+            </div>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function() {
+    $("#autoaddress").geocomplete();
+  })
+</script>
+
+
+              <!-- <div class="row">
+                  <% if !current_user.phone_number.blank? %>
+                      <h4><%= current_user.phone_number %></h4>
+                      <button class="btn btn-default" data-toggle="modal" data-target="#update-phone">Update Phone Number</button>
+                      <% if current_user.phone_verified == false %>
+                          <button class="btn btn-default" data-toggle="modal" data-target="#verify-phone">Verify</button>
+                      <% end %>
+                  <% else %>
+                      <button class="btn btn-default" data-toggle="modal" data-target="#update-phone">Add Phone Number</button>
+                  <% end %>
+              </div> -->
+
+              <!-- <div class="row">
+
+                <div id="verify-phone" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+
+                      <div class="modal-header">
+                        <button class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Verification Code</h4>
+                      </div>
+
+                      <div class="modal-body">
+                        <%= form_for current_user, url: verify_phone_number_user_path(current_user), method: :post do |f| %>
+                            <div class="form-group">
+                              <%= f.text_field :pin, class: "form-control", placeholder: "Your PIN", value: "" %>
+                            </div>
+                            <div class="text-center">
+                              <%= f.submit "Verify", class: "btn btn-normal" %>
+                            </div>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+
+
+              <!-- <div class="row">
+                <div id="update-phone" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+
+                      <div class="modal-header">
+                        <button class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Phone Number</h4>
+                      </div>
+
+                      <div class="modal-body">
+                        <%= form_for current_user, url: update_phone_number_user_path(current_user) do |f| %>
+                            <div class="form-group">
+                              <%= f.phone_field :phone_number, class: "form-control", placeholder: "Your Phone Number" %>
+                            </div>
+                            <div class="text-center">
+                              <%= f.submit "Save", class: "btn btn-normal" %>
+                            </div>
+                        <% end %>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div> -->
