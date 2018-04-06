@@ -9,7 +9,7 @@ class ClaimsController < ApplicationController
 
   def new
     @claim = current_user.claims.build
-    @photos = @claim.photos
+    @attachments = @claim.attachments
   end
 
   def create
@@ -18,7 +18,7 @@ class ClaimsController < ApplicationController
     if @claim.save
       if params[:images]
         params[:images].each do |img|
-          @claim.photos.create(image: img)
+          @claim.attachments.create(file: img, file_type: 'image')
         end
       end
       redirect_to listing_claim_path(@claim), notice: "Saved..."
@@ -29,12 +29,12 @@ class ClaimsController < ApplicationController
   end
 
   def show
-    @photos = @claim.photos
+    @attachments = @claim.attachments
     @guest_reviews = @claim.guest_reviews
   end
 
   def listing
-    @photos = @claim.photos
+    @attachments = @claim.attachments
     @insured_contact = @claim.claim_insured_contact || @claim.contacts.new(type: 'InsuredContact')
     @claimant_contact = @claim.claim_claimant_contact || @claim.contacts.new(type: 'OtherContact')
   end
@@ -46,7 +46,7 @@ class ClaimsController < ApplicationController
   end
 
   def photo_upload
-    @photos = @claim.photos
+    @attachments = @claim.attachments
   end
 
   def claim_tasks
@@ -75,17 +75,17 @@ class ClaimsController < ApplicationController
 
     new_params = claim_params
     new_params = claim_params.merge(active: true) if is_ready_claim
-    @photos = @claim.photos
+    @attachments = @claim.attachments
     if @claim.update(new_params)
       if params[:images]
         params[:images].each do |img|
-          @claim.photos.create(image: img)
+          @claim.attachments.create(file: img, file_type: 'image')
         end
       end
-      @insured_contact =  @claim.claim_insured_contact || @claim.contacts.new(insured_contact_params.merge!(type: 'InsuredContact'))
-      @claimant_contact = @claim.claim_claimant_contact || @claim.contacts.new(claimant_contact_params.merge!(type: 'OtherContact'))
-      render action: :listing and return false unless update_insured_contact
-      render action: :listing and return false unless update_claimant_contact
+      @insured_contact =  @claim.claim_insured_contact || @claim.contacts.new(type: 'InsuredContact')# if params[:insured_contact]
+      @claimant_contact = @claim.claim_claimant_contact || @claim.contacts.new(type: 'OtherContact')# if params[:other_contact]
+      render action: :listing and return false unless update_insured_contact if params[:insured_contact]
+      render action: :listing and return false unless update_claimant_contact if params[:other_contact]
       flash[:notice] = "Saved..."
     else
       flash[:alert] = "Something went wrong..."
@@ -179,7 +179,7 @@ class ClaimsController < ApplicationController
     end
 
     def is_ready_claim
-      !@claim.active && !@claim.price.blank? && !@claim.listing_name.blank? && !@claim.photos.blank? && !@claim.address.blank?
+      !@claim.active && !@claim.price.blank? && !@claim.listing_name.blank? && !@claim.attachments.blank? && !@claim.address.blank?
     end
 
     def claim_params

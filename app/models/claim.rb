@@ -2,7 +2,7 @@ class Claim < ApplicationRecord
   enum instant: {Request: 0, Instant: 1}
 
   belongs_to :user
-  has_many :photos
+  has_many :attachments
   has_many :reservations
   has_many :tasks
   has_many :damages
@@ -30,8 +30,8 @@ class Claim < ApplicationRecord
   INSURER_OPTIONS = [["Allianz", 'ALZ'], ['QBE', 'QBE'], ['RACQ', 'RACQ'], ['Suncorp', 'SCP'], ['Zurich', 'ZUR']].freeze
 
   def cover_photo(size)
-    if self.photos.length > 0
-      self.photos[0].image.url(size)
+    if self.attachments.length > 0
+      self.attachments[0].file.url(size)
     else
       "No Image.jpg"
     end

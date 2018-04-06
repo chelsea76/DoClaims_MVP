@@ -2,7 +2,7 @@
     <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-heading preview">
-          <%= image_tag claim.cover_photo(:medium) %>
+          <%= image_tag claim.attachments.present? ? claim.attachments.first.file.url() : 'No Image.jpg', style: 'width:100%' %>
         </div>
         <div class="panel-body">
           <%= link_to claim.listing_name, claim %><br/>

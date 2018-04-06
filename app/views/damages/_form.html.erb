@@ -40,14 +40,41 @@
 </div>  
 <div class="row">
   <div class="form-group">
-    <label>Photo</label>
-    <span class="btn btn-default btn-file text-babu">
-      <%= file_field_tag "damage[photo]", type: :file %>
-    </span>
+    <div class="col-md-12">
+      <label>File </label>
+      <%= select_tag "file_type", options_for_select(Attachment::TYPE_OPTIONS, @damage.attachment&.file_type), class: 'form-control' %>
+      <span class="btn btn-default btn-file text-babu">
+        <%= file_field_tag "file", type: :file, accept: "application/*" %>
+      </span>
+    </div>
   </div>
 </div>
-<% if @damage.photo_file_name.present? %>
+<% if @damage.attachment.present? %>
   <div class="row">
-    <%= image_tag @damage.cover_photo(:thumb) %>
-  </div>    
+    <div class="col-md-4">
+      <div class="panel-heading preview">
+        <%= attachment_url(@damage) %>
+      </div>  
+    </div>
+  </div>
 <% end %>
+<script type="text/javascript">
+  <% if @damage.attachment.present? %>
+    <% if @damage.attachment.file_type == 'image'%>
+      $('#file').prop('accept', 'image/*');
+    <% elsif @damage.attachment.file_type == 'video'%>
+      $('#file').prop('accept', 'video/*');
+    <% else %>
+      $('#file').prop('accept', 'application/*');
+    <% end %>
+  <% end %>
+  $('#file_type').off('change').on('change', function(){
+    if($(this).val() === 'image'){
+      $('#file').prop('accept', 'image/*');
+    }else if($(this).val() === 'video'){
+      $('#file').prop('accept', 'video/*');
+    }else{
+      $('#file').prop('accept', 'application/*');
+    }
+  })
+</script>

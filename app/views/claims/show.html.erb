@@ -1,7 +1,7 @@
 <!-- Image -->
 <div class="row">
   <div class="col-md-12">
-    <%= image_tag @claim.cover_photo(nil), width: "100%" %>
+    <%= image_tag @claim.attachments.present? ? @claim.attachments.first.file.url() : 'No Image.jpg', style: 'width:20%' %>
   </div>
 </div>
 <br/>
@@ -91,20 +91,20 @@
     <!-- Carousel -->
     <div class="row">
 
-      <% if @photos.length > 0 %>
+      <% if @attachments.length > 0 %>
           <div id="myCarousel" class="carousel slide" data-ride="carousel">
           <!-- Indicators -->
           <ol class="carousel-indicators">
-            <% @photos.each do |photo| %>
+            <% @attachments.each do |photo| %>
                 <li data-target="#myCarousel" data-slide-to="<%= photo.id %>"></li>
             <% end %>
           </ol>
 
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
-            <% @photos.each do |photo| %>
-                <div class="item <%= 'active' if photo.id == @photos[0].id %>">
-                  <%= image_tag photo.image.url() %>
+            <% @attachments.each do |photo| %>
+                <div class="item <%= 'active' if photo.id == @attachments[0].id %>">
+                  <%= image_tag photo.file.url(), style: 'width:20%' %>
                 </div>
             <% end %>
           </div>
@@ -178,7 +178,7 @@
           <div class="col-md-4">
             <div class="panel panel-default">
               <div class="panel-heading preview">
-                <%= image_tag claim.cover_photo(:thumb) %>
+                <%= image_tag claim.attachments.present? ? claim.attachments.first.file.url() : 'No Image.jpg', style: 'width:20%' %>
               </div>
               <div class="panel-body">
                 <%= link_to claim.listing_name, claim %><br/>
