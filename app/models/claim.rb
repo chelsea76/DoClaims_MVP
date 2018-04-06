@@ -8,6 +8,7 @@ class Claim < ApplicationRecord
   has_many :damages
   has_many :claim_contact_mappings
   has_many :contacts, through: :claim_contact_mappings
+  has_one :claim_additional_detail
 
   has_many :guest_reviews
   has_many :calendars

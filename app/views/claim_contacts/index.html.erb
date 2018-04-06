@@ -21,6 +21,7 @@
               <th>Last Name</th>
               <th>User</th>
               <th>Email</th>
+              <th>Preferred Method</th>
               <th>Type</th>
               <th>Mobile</th>
               <th>Office</th>
@@ -34,6 +35,7 @@
                 <td><%= contact.lastname %></td>
                 <td><%= contact.user_id ? contact.user.fullname : 'None' %></td>
                 <td><%= contact.email %></td>
+                <td><%= Contact::PREFERRED_METHOD_OPTIONS.to_h.invert[contact.preferred_method] %></td>
                 <td><%= Contact::TYPE_OPTIONS.to_h.invert[contact.type] %></td>
                 <td><%= contact.mobile.present? ?  contact.mobile : "None" %></td>
                 <td><%= contact.office.present? ? contact.office : "None" %></td>

@@ -39,7 +39,7 @@ class ContactsController < ApplicationController
   private
 
   def contact_params
-    params.require(:contact).permit(:firstname, :lastname, :mobile, :email, :other, :office, :type, :user_id)
+    params.require(:contact).permit(:firstname, :lastname, :mobile, :email, :other, :office, :type, :user_id, :preferred_method)
   end
 
   def find_user

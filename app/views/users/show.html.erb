@@ -148,6 +148,10 @@
                       <td><%= Contact::TYPE_OPTIONS.to_h.invert[@user.contact.type] %></td>
                     </tr>
                     <tr>
+                      <th scope="row">Preferred Method:</th>
+                      <td><%= Contact::PREFERRED_METHOD_OPTIONS.to_h.invert[@user.contact.preferred_method] %></td>
+                    </tr>
+                    <tr>
                       <th scope="row">Mobile:</th>
                       <td><%= @user.contact.mobile %></td>
                     </tr>
