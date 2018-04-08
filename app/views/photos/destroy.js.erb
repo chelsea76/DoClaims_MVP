@@ -1,9 +1,9 @@
 $('#photos').html("<%= j render 'photos_list' %>")
-<% if @claim.photos.blank? %>
+<% if @claim.attachments.blank? %>
   $('#photo_check').hide();
 <% end %>
 
-<% if !@claim.active && !@claim.price.blank? && !@claim.listing_name.blank? && !@claim.photos.blank? && !@claim.address.blank? %>
+<% if !@claim.active && !@claim.price.blank? && !@claim.listing_name.blank? && !@claim.attachments.blank? && !@claim.address.blank? %>
     $('#publish_button').attr('disabled', false);
 <% else %>
     $('#publish_button').attr('disabled', true);

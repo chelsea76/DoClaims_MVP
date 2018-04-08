@@ -60,7 +60,7 @@
               <% @claims.each do |claim| %>
                 <div class="row">
                   <div class="col-md-2">
-                    <%= image_tag claim.cover_photo(:thumb) %>
+                  <%= image_tag claim.attachments.present? ? claim.attachments.first.file.url() : 'No Image.jpg', style: 'width:150%' %>
                   </div>
                   <div class="col-md-7">
                     <h4><%= claim.listing_name %></h4>

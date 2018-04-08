@@ -12,6 +12,21 @@
 
 ActiveRecord::Schema.define(version: 20180407054920) do
 
+  create_table "attachments", force: :cascade do |t|
+    t.string   "file_type"
+    t.integer  "claim_id"
+    t.integer  "damage_id"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["claim_id"], name: "index_attachments_on_claim_id", using: :btree
+    t.index ["damage_id"], name: "index_attachments_on_damage_id", using: :btree
+  end
+>>>>>>> Support for attachments
+
   create_table "calendars", force: :cascade do |t|
     t.date     "day"
     t.integer  "price"
@@ -123,10 +138,6 @@ ActiveRecord::Schema.define(version: 20180407054920) do
     t.string   "sub_type"
     t.float    "product_cost",       limit: 24
     t.float    "labour_cost",        limit: 24
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
-    t.integer  "photo_file_size"
-    t.datetime "photo_updated_at"
     t.integer  "claim_id"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
@@ -149,17 +160,6 @@ ActiveRecord::Schema.define(version: 20180407054920) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_notifications_on_user_id"
-  end
-
-  create_table "photos", force: :cascade do |t|
-    t.integer  "claim_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-    t.index ["claim_id"], name: "index_photos_on_claim_id"
   end
 
   create_table "reservations", force: :cascade do |t|
