@@ -38,6 +38,7 @@ class DamagesController < ApplicationController
 
   def index
     @damages = @claim.damages
+    @claim_additional_detail = @claim.claim_additional_detail.present? ? @claim.claim_additional_detail : @claim.build_claim_additional_detail
   end
 
   def destroy

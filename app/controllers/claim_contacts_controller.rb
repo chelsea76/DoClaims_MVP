@@ -72,7 +72,7 @@ class ClaimContactsController < ApplicationController
   private
 
   def contact_params
-    params.require(:contact).permit(:firstname, :lastname, :mobile, :email, :other, :office, :type, :claim_id)
+    params.require(:contact).permit(:firstname, :lastname, :mobile, :email, :other, :office, :type, :claim_id, :preferred_method)
   end
 
   def find_claim

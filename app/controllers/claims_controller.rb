@@ -59,6 +59,18 @@ class ClaimsController < ApplicationController
   def location
   end
 
+  def lost_details
+    @claim = Claim.find(params[:id])
+    if @claim.claim_additional_detail.present?
+      @claim.claim_additional_detail.update_attributes(claim_additional_params)
+    else
+      @additional_details = @claim.build_claim_additional_detail(claim_additional_params)
+      @additional_details.save
+    end
+    flash[:success] = "Details updated successfully"
+    redirect_to claim_damages_path(@claim)
+  end
+
   def update
 
     new_params = claim_params
@@ -93,6 +105,7 @@ class ClaimsController < ApplicationController
       @insured_contact = @claim.contacts.new(insured_contact_params.merge!(type: 'InsuredContact'))
       if @insured_contact.save
         @claim.claim_contact_mappings << ClaimContactMapping.new(for_claim: true, contact: @insured_contact)
+        @claim.claim_additional_detail.present? ? @claim.claim_additional_detail.update_column(:insured_id, @insured_contact.id) : @claim.create_claim_additional_detail(insured_id: @insured_contact.id)
         return true
       else
         flash[:alert] = @insured_contact.errors.full_messages
@@ -113,6 +126,7 @@ class ClaimsController < ApplicationController
       @claimant_contact = @claim.contacts.new(claimant_contact_params.merge!(type: 'OtherContact'))
       if @claimant_contact.save
         @claim.claim_contact_mappings << ClaimContactMapping.new(for_claim: true, contact: @claimant_contact)
+        @claim.claim_additional_detail.present? ? @claim.claim_additional_detail.update_column(:claimant_id, @claimant_contact.id) : @claim.create_claim_additional_detail(claimant_id: @claimant_contact.id)
         return true
       else
         flash[:alert] = @claimant_contact.errors.full_messages
@@ -178,5 +192,9 @@ class ClaimsController < ApplicationController
 
     def claimant_contact_params
       params.require(:other_contact).permit(:firstname, :lastname, :email, :mobile, :number, :street, :city, :postcode, :state, :country, :con_type)
+    end
+
+    def claim_additional_params
+      params.require(:claim_additional_detail).permit(:is_cat, :cat_id, :excess_amount)
     end
   end

@@ -67,16 +67,16 @@
                     <div class="col-md-4 select">
                       <div class="form-group">
                         <label>Type</label>
-                        <%= ins_con.select :con_type, options_for_select(Contact::CONTACT_TYPE_OPTIONS, @insured_contact.con_type) , {}, {class: 'form-control'} %>
+                        <%= ins_con.select :con_type, options_for_select(Contact::CONTACT_TYPE_OPTIONS, @insured_contact.con_type) , {}, {class: 'form-control', data: { contact: 'insured_contact' }} %>
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 insured_contact_first_name">
                       <div class="form-group">
-                        <label>First Name</label>
+                        <label><%= @insured_contact.is_con_type_business? ? 'Business Name' : 'First Name' %></label>
                         <%= ins_con.text_field :firstname, class: 'form-control' %>
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 insured_contact_last_name" style="<%= @insured_contact.is_con_type_business? ? 'display:none' : 'display:block' %>">
                       <div class="form-group">
                         <label>Second Name</label>
                         <%= ins_con.text_field :lastname, class: 'form-control' %>
@@ -165,16 +165,16 @@
                     <div class="col-md-4 select">
                       <div class="form-group">
                         <label>Type</label>
-                        <%= claimant_con.select :con_type, options_for_select(Contact::CONTACT_TYPE_OPTIONS, @claimant_contact.con_type) , {}, {class: 'form-control'} %>
+                        <%= claimant_con.select :con_type, options_for_select(Contact::CONTACT_TYPE_OPTIONS, @claimant_contact.con_type) , {}, {class: 'form-control', data: { contact: 'other_contact' }} %>
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 other_contact_first_name">
                       <div class="form-group">
-                        <label>First Name</label>
+                        <label><%= @claimant_contact.is_con_type_business? ? 'Business Name' : 'First Name' %></label>
                         <%= claimant_con.text_field :firstname, class: 'form-control' %>
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 other_contact_last_name" style="<%= @claimant_contact.is_con_type_business? ? 'display:none' : 'display:block' %>">
                       <div class="form-group">
                         <label>Second Name</label>
                         <%= claimant_con.text_field :lastname, class: 'form-control' %>
@@ -283,3 +283,15 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  $('[id*="contact_con_type"]').off('change').on('change', function(){
+    var con_type = $(this).data('contact');
+    if($(this).val() === 'BUS'){
+      $('.' + con_type+ '_last_name').hide();
+      $('.' + con_type+ '_first_name label').text("Business Name");
+    }else{
+      $('.' + con_type+ '_last_name').show();
+      $('.' + con_type+ '_first_name label').text("First Name");
+    }
+  });
+</script>

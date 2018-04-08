@@ -5,7 +5,8 @@ class Contact < ApplicationRecord
   has_many :claim_contact_mappings
   has_many :claims, through: :claim_contact_mappings
 
-  validates_presence_of :firstname, :lastname, :email
+  validates_presence_of :firstname, :email
+  validates_presence_of :lastname, if: Proc.new { |user| user.con_type == 'IND'}
   validates_uniqueness_of :email
   validates_format_of :email, :with => EMAIL_REGEXP
 
@@ -17,4 +18,10 @@ class Contact < ApplicationRecord
   STATE_OPTIONS = [['ACT', 'ACT'], ['NSW', 'NSW'], ['NT', 'NT'], ['QLD', 'QLD'], ['SA', 'SA'], ['VIC', 'VIC'], ['WA', 'WA']].freeze
   COUNTRY_OPTIONS = [['Australia', 'AUS']].freeze
   CONTACT_TYPE_OPTIONS = [['Individual', 'IND'], ['Business', 'BUS']].freeze
+  PREFERRED_METHOD_OPTIONS = [['Email', 'email'], ["Mobile", 'mobile'], ['Office', 'office']].freeze
+
+
+  def is_con_type_business?
+    con_type == 'BUS'
+  end
 end

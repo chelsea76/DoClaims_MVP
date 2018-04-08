@@ -30,6 +30,8 @@ Rails.application.routes.draw do
       get 'preload'
       get 'preview'
       get 'claim_tasks'
+      post 'lost_details'
+      patch 'lost_details'
     end
     resources :photos, only: [:create, :destroy]
     resources :reservations, only: [:create]

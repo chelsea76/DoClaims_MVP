@@ -9,6 +9,37 @@
           <h2 class="dashhead-title">Damages</h2>
         </div>
       </div>
+      <div class="panel-body">
+        <h6 class="dashhead-title">Loss Details</h6>
+        <%= form_for @claim_additional_detail, url: lost_details_claim_path(@claim) do |f|%>
+          <div class="row">
+            <div class="col-md-5">
+              <div class="form-group">
+                <%= f.radio_button :is_cat, true, checked: @claim_additional_detail.is_cat %>
+                <%= f.label 'Yes'%>
+                <%= f.radio_button :is_cat, false, checked: !@claim_additional_detail.is_cat %>
+                <%= f.label 'No'%>
+              </div>
+            </div>  
+          </div>  
+          <div class="row">  
+            <div class="col-md-3">  
+              <div class="form-group cat_id">
+                <label>CAT ID</label>
+                <%= f.text_field :cat_id , class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <label>Excess Amount</label>
+                <%= f.text_field :excess_amount , class: 'form-control' %>
+              </div>
+            </div>
+          </div>
+          <div>
+            <%= f.submit "Save", class: "btn btn-form" %>
+          </div>      
+        <% end %>
+      </div>
+      <hr/>
       <div class="flextable" style="padding-bottom:20px;">
         <div class="flextable-item">
           <%= link_to '+Add Damage', new_claim_damage_path(claim_id: @claim.id)%>
@@ -59,3 +90,16 @@
     </div>      
   </div>
 </div>
+<script type="text/javascript">
+  if($("input[name='claim_additional_detail[is_cat]']:checked").val() == 'false'){
+    $('.cat_id').hide();
+  }
+  $("input[type='radio']").off('change').on('change', function(){
+    if($(this).val() === 'true'){
+      $('.cat_id').show();
+    }else{
+      $('#claim_additional_detail_cat_id').prop('value', '');
+      $('.cat_id').hide();
+    }
+  })
+</script>

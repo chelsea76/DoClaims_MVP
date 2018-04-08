@@ -22,6 +22,18 @@ ActiveRecord::Schema.define(version: 20180407054920) do
     t.index ["claim_id"], name: "index_calendars_on_claim_id"
   end
 
+  create_table "claim_additional_details", force: :cascade do |t|
+    t.integer  "insured_id"
+    t.integer  "claimant_id"
+    t.boolean  "is_cat", default: false
+    t.string  "cat_id"
+    t.float    "excess_amount", limit: 24
+    t.integer  "claim_id"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["claim_id"], name: "index_claim_additional_details_on_claim_id", using: :btree
+  end
+
   create_table "claim_contact_mappings", force: :cascade do |t|
     t.integer  "claim_id"
     t.integer  "contact_id"
@@ -91,6 +103,7 @@ ActiveRecord::Schema.define(version: 20180407054920) do
     t.string   "state"
     t.string   "postcode"
     t.string   "country"
+    t.string   "preferred_method", default: "email"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["user_id"], name: "index_contacts_on_user_id", using: :btree
