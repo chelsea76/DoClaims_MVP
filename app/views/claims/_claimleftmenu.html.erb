@@ -48,7 +48,7 @@
   <%  @claim_criteria_class = "nav-link" %>
 <% end %>
 
-<% if current_page?(claim_tasks_claim_path(@claim)) %>
+<% if current_page?(claim_tasks_path(@claim)) || params[:controller] == 'tasks'%>
   <%  @tasks_class = "nav-link active" %>
 <% else %>
   <%  @tasks_class = "nav-link" %>
@@ -118,7 +118,7 @@
           <% end %>
         </li>
         <li class="nav-item">
-          <%= link_to claim_tasks_claim_path(@claim), class: @tasks_class, title: "Tasks", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
+          <%= link_to claim_tasks_path(@claim), class: @tasks_class, title: "Tasks", data: {toggle: "tooltip", placement: "right", container: "body" } do %>
             <span class="icon icon-list">&nbsp; Tasks</span>
             <!-- <% if !@claim.address.blank? %>
               <span class="icon icon-check fl-right grey_green"></span>

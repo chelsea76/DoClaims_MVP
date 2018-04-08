@@ -1,0 +1,69 @@
+<% if flash[:errors].present? %>
+  <script type="text/javascript">
+    <% flash[:errors].each do |value| %>
+      toastr.error('<%= value %>')
+    <% end %>
+  </script>
+<% end %>
+<%= render partial: 'claims/claimleftmenu' %>
+<%= render partial: 'claims/claimsummarymenu' %>
+
+<div class="with-iconav">
+  <div class="container-fluid-middle">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Task Details
+          </div>
+          </br>
+          <div class="panel-body">
+            <%= form_for(@task, url: "/claims/#{@claim.id}/tasks/#{@task.id}", html: {multipart: true}) do |f| %>
+              <div class="row">
+                <div class="col-md-4 select">
+                  <div class="form-group">
+                    <label>Task Status</label>
+                    <%= f.select :status, options_for_select(Task::STATUS_OPTIONS, @task.status), {},
+                                  prompt: "Select...", class: "form-control" %>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Assign To</label>
+                    <%= text_field_tag "user_picker", '', autocomplete: "on", id: 'user_picker', class: 'form-control', placeholder: "Please add at least 2 characters to find user" %>
+                    <%= hidden_field_tag "user_id", '', id: 'assigned_user_id'%>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 select">
+                  <div class="form-group">
+                    <label>Log Hours</label>
+                    <%= f.text_field :minutes_logged, name: 'minutes_logged', class: "form-control", placeholder: "Please enter time in minutes", id: "minutes_logged" %>
+                  </div>
+                </div>  
+              </div>
+              <div class="text-center">
+                <%= f.submit "Save", class: "btn btn-form" %>
+                <%= link_to 'Cancel', claim_tasks_path(@claim), class: "btn cancel-btn"%>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(function() {
+    $('#user_picker').autocomplete({
+      minLength: 1,
+      source: "<%= users_claim_tasks_path(@claim) %>",
+      select: function(event, ui){
+        if(ui.item.id !== undefined){
+          $('#assigned_user_id').prop('value', ui.item.id)
+        }
+      }
+    });
+  });
+</script>
