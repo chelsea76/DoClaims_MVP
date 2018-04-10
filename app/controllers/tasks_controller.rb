@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_claim
+  before_action :find_claim, except: [:my_tasks]
   # before_action :set_reservation, only: [:approve, :decline]
 
   def index

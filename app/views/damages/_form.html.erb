@@ -1,52 +1,60 @@
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-12">
     <div class="form-group">
       <label>Summary</label>
       <%= f.text_field :summary, placeholder: "Summary", class: "form-control" %>
     </div>
   </div>
-  <div class="col-md-4">
-    <div class="form-group">
-      <label>Description</label>
-      <%= f.text_area :description, rows: 5, placeholder: "Description", class: "form-control" %>
-    </div>
-  </div>
-  <div class="col-md-4">
+</div>  
+<div class="row">  
+  <div class="col-md-6">
     <div class="form-group">
       <label>Type</label>
       <%= f.text_field :damage_type, placeholder: "Type", class: "form-control" %>
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-md-4">
-    <div class="form-group">
-      <label>Sub Type</label>
-      <%= f.text_field :sub_type, placeholder: "Sub Type", class: "form-control" %>
-    </div>
-  </div>
-  <div class="col-md-4">
+  <div class="col-md-6">
     <div class="form-group">
       <label>Product Cost</label>
       <%= f.text_field :product_cost, placeholder: "Product Cost", class: "form-control" %>
     </div>
   </div>
-  <div class="col-md-4">
+</div>  
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group">
+      <label>Sub Type</label>
+      <%= f.text_field :sub_type, placeholder: "Sub Type", class: "form-control" %>
+    </div>
+  </div>
+  <div class="col-md-6">
     <div class="form-group">
       <label>Labour Cost</label>
       <%= f.text_field :labour_cost, placeholder: "Labour Cost", class: "form-control" %>
     </div>
   </div>
 </div>  
+<div class="row">    
+  <div class="col-md-12">
+    <div class="form-group">
+      <label>Description</label>
+      <%= f.text_area :description, rows: 5, placeholder: "Description", class: "form-control" %>
+    </div>
+  </div>
+</div>
 <div class="row">
-  <div class="form-group">
-    <div class="col-md-12">
+  <div class="col-md-6">
+    <div class="form-group">
       <label>File </label>
       <%= select_tag "file_type", options_for_select(Attachment::TYPE_OPTIONS, @damage.attachment&.file_type), class: 'form-control' %>
-      <span class="btn btn-default btn-file text-babu">
+    </div>
+  </div>  
+  <div class="col-md-6">  
+    <div class="form-group">
+      <span class="btn btn-default btn-file text-babu" style="padding-top:30px;">
         <%= file_field_tag "file", type: :file, accept: "application/*" %>
       </span>
-    </div>
+    </div>  
   </div>
 </div>
 <% if @damage.attachment.present? %>
