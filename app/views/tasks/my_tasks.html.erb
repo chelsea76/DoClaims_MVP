@@ -2,31 +2,38 @@
 
 <div class="with-iconav">
   <div class="container-fluid-middle">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            My Tasks
-          </div>
-          <div class="panel-body">
-
-            <% @my_tasks.each do |task| %>
-              <div class="row">
-                <div class="col-md-2">
-                  <%= task.task_type %>
-                </div>
-                <div class="col-md-7">
-                  <h4><%= task.task_name %></h4>
-                </div>
-                <div class="col-md-3 right">
-
-                </div>
-              </div>
-              <hr/>
-            <% end %>
-          </div>
+    <div class="col-12">
+      <div class="dashhead">
+        <div class="dashhead-titles">
+          <h2 class="dashhead-title">My Tasks</h2>
         </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Task Type</th>
+              <th>Milestone Type</th>
+              <th>Due On</th>
+              <th>Status</th>
+              <th>Claim</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @my_tasks.each do |t|%>
+              <tr>
+                <td><%= link_to t.title, edit_claim_task_path(id: t.id, claim_id: t.claim_id) %></td>
+                <td><%= t.task_type.name %></td>
+                <td><%= t.milestone %></td>
+                <td><%= t.task_due&.strftime("%d/%m/%Y") %></td>
+                <td><%= Task::STATUS_OPTIONS.to_h.invert[t.status] %></td>
+                <td><%= link_to t.claim_id, claim_tasks_path(t.claim) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>  
       </div>
     </div>
   </div>
-</div>
+</div>      

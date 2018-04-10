@@ -94,6 +94,7 @@ class ClaimsController < ApplicationController
   end
 
   def update_insured_contact
+    return true if params[:insured_contact][:firstname].blank? && params[:insured_contact][:lastname].blank? && params[:insured_contact][:email].blank?
     if @claim.claim_insured_contact.present?
       @insured_contact = @claim.claim_insured_contact
       unless @insured_contact.update(insured_contact_params)
@@ -115,6 +116,7 @@ class ClaimsController < ApplicationController
   end
 
   def update_claimant_contact
+    return true if params[:other_contact][:firstname].blank? && params[:other_contact][:lastname].blank? && params[:other_contact][:email].blank?
     if @claim.claim_claimant_contact.present?
       @claimant_contact = @claim.claim_claimant_contact
       unless @claimant_contact.update(claimant_contact_params)
