@@ -7,8 +7,11 @@ Rails.application.routes.draw do
   devise_for :users,
              path: '',
              path_names: {sign_in: 'login', sign_out: 'logout', edit: 'profile', sign_up: 'registration'},
-             controllers: {omniauth_callbacks: 'omniauth_callbacks', registrations: 'registrations'}
+             controllers: {omniauth_callbacks: 'omniauth_callbacks', registrations: 'registrations', confirmations: 'confirmations'}
 
+  devise_scope :user do
+    post '/confirm'=> "confirmations#confirm"
+  end
   resources :users, only: [:show] do
     member do
       post '/verify_phone_number' => 'users#verify_phone_number'

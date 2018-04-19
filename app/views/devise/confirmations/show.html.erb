@@ -1,0 +1,18 @@
+  <h2>Confirm Sign up</h2>
+  <div class="panel-body">
+    <%= form_tag('/confirm', html: { method: :post }) do |f| %>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Access Code :</label>
+            <%= text_field_tag :access_code, '', class: 'form-control', placeholder: "Please use Access Code which is provided in Confirmation email", title: "Please use Access Code which is provided in Confirmation email", require: true %>
+            <%= hidden_field_tag :confirmation_token, params[:confirmation_token] %>
+          </div>
+        </div>    
+      </div>
+
+      <div class="">
+        <%= submit_tag "Confirm" %>
+      </div>
+    <% end %>
+  </div>
