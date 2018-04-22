@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(version: 20180418083350) do
     t.index ["claim_id"], name: "index_attachments_on_claim_id", using: :btree
     t.index ["damage_id"], name: "index_attachments_on_damage_id", using: :btree
   end
->>>>>>> Support for attachments
 
   create_table "calendars", force: :cascade do |t|
     t.date     "day"
